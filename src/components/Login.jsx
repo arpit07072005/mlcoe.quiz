@@ -15,7 +15,7 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/login/register",
+        "https://final-quiz-portal.onrender.com/api/login/register",
         {
           email: email,
           name: fullname, // backend expects name
@@ -38,7 +38,7 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/login/verify",
+        "https://final-quiz-portal.onrender.com/api/login/verify",
         {
           otp: otp,
         },

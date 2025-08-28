@@ -63,7 +63,7 @@ const MainQuiz = ({handlesend}) => {
 
     const fetchData = async () => {
   try {
-    const response = await axios.get("http://localhost:5000/api/mcqs/getques");
+    const response = await axios.get("https://final-quiz-portal.onrender.com/api/mcqs/getques");
     console.log("Fetched questions:", response.data);
     const qs = response.data || [];
     setQuestions(qs);
@@ -261,7 +261,7 @@ const handleSubmit = async () => {
 
   try {
     // ✅ Save result to backend
-    await axios.post("http://localhost:5000/api/results/results", payload);
+    await axios.post("https://final-quiz-portal.onrender.com/api/results/results", payload);
 
     // ✅ Clear quiz state from localStorage
     localStorage.removeItem(STORAGE_KEY);
