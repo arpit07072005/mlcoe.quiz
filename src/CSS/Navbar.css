@@ -1,0 +1,57 @@
+.adminnav{
+  width:100%;
+  height:auto;
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  padding:10px 20px 10px 20px;
+}
+.headeradmin{
+   font-family: "Poppins", sans-serif;
+   font-size:14px;
+   font-weight: 500;
+   display: flex;
+   align-items: center;
+   
+}
+.adminhead{
+    border-left: 1px solid rgba(0, 0, 0, 0.5);
+    padding-left:10px;
+    margin-left:10px;
+}
+.searchbar{
+  width:40%;
+   font-family: "Poppins", sans-serif;
+   background-color: white;
+   color:black;
+   font-size:14px;
+   font-weight: 400;
+   border:1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding:10px 0px 10px 10px;
+    border-radius: 6px;
+}
+.mode{
+   border:1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+     border-radius: 6px;
+     padding:5px 8px 3px 8px;
+     position:relative
+}
+.allmodes{
+  position:absolute;
+  cursor: pointer;
+  width:200px;
+  height:auto;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  gap:10px;
+  padding:10px;
+  background-color: white;
+  top:7vh;
+  right:0px;
+  border-radius: 8px;
+  border:1px solid rgba(0, 0, 0, 0.1);
+
+}

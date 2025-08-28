@@ -1,0 +1,97 @@
+*{
+    padding:0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.login{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    margin:10px;
+
+}
+.innerdiv{
+    width:370px;
+    gap:20px;
+    height:auto;
+    display:flex;
+    flex-direction: column;
+    align-items: left;
+   
+}
+h3{
+font-family: "Poppins", sans-serif;
+   font-size:24px;
+   color:#1F2937;
+}
+.subhead{
+    font-family: "Poppins", sans-serif;
+   font-size:16px;
+   color:#4B5563;
+   margin-top: -15px;
+}
+form{
+    display: flex;
+      flex-direction: column;
+    align-items: left;
+    width:100%;
+    height: auto;
+    gap:20px;
+}
+.email{
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: left;
+    gap:10px;
+}
+label{
+      font-family: "Poppins", sans-serif;
+   font-size:14px;
+   color:#020817;
+   font-weight: 500;
+}
+.input1{
+  width:100%;
+  background-color: white;
+  padding:10px 10px 10px 10px;
+  border-radius:8px;
+  border:1px solid black;
+     font-family: "Poppins", sans-serif;
+   font-size:14px;
+   color:#020817;
+}
+.forgotpass{
+    display:flex;
+    flex-direction: row;
+    width:100%;
+    align-items: left;
+    justify-content: space-between;
+}
+.remember{
+    display:flex;
+    flex-direction: row;
+    align-items:center;
+    gap:10px;
+}
+.login1{
+    width:100%;
+    border-radius: 8px;
+    padding:10px 10px 10px 10px;
+    background-color:#2563EB;
+    color:white;
+       font-family: "Poppins", sans-serif;
+   font-size:14px;
+   text-align: center;
+   font-weight: 500;
+
+
+}
+@media screen and (max-width:420px){
+    .innerdiv{
+      width:100%;
+    }
+}
