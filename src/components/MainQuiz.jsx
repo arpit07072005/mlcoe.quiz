@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 const STORAGE_KEY = "quizState_preserve_classnames_v1";
 
 const MainQuiz = ({handlesend}) => {
+  const[cheat,setcheat]=useState(0)
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [responses, setResponses] = useState([]); 
@@ -21,6 +22,98 @@ const MainQuiz = ({handlesend}) => {
   const [categoryScores, setCategoryScores] = useState({});
    const userName = localStorage.getItem("userName");
   const userEmail = localStorage.getItem("userEmail");
+ const [timeLeft, setTimeLeft] = useState(3600);
+
+
+
+ const enterFullScreen = () => {
+  const elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) { // Firefox
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, Opera
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { // IE/Edge
+    elem.msRequestFullscreen();
+  }
+};
+
+  useEffect(() => {
+    enterFullScreen();
+  }, []);
+
+
+ useEffect(() => {
+    if (submitted) return; // stop timer after submit
+    if (timeLeft <= 0) {
+      handleSubmit(); // auto-submit when time is up
+      return;
+    }
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft, submitted]);
+
+  // ⏱️ NEW - format timer mm:ss
+  const formatTime = (seconds) => {
+    const m = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const s = String(seconds % 60).padStart(2, "0");
+    return `${m}:${s}`;
+  };
+
+   // ✅ Detect exit from fullscreen
+  useEffect(() => {
+    const handleExit = () => {
+      if (!document.fullscreenElement) {
+        alert("⚠️ You exited fullscreen. Returning you back to the test!");
+        enterFullScreen();
+      }
+    };
+
+    document.addEventListener("fullscreenchange", handleExit);
+    return () => document.removeEventListener("fullscreenchange", handleExit);
+  }, []);
+
+  useEffect(() => {
+    const disableShortcuts = (e) => {
+      if (
+        (e.ctrlKey && ["c", "v", "x", "u"].includes(e.key.toLowerCase())) || // copy/paste/source
+        e.key === "F12"
+      ) {
+        e.preventDefault();
+        alert("🚫 Shortcuts are disabled during the test!");
+      }
+    };
+
+    const disableRightClick = (e) => e.preventDefault();
+
+    document.addEventListener("keydown", disableShortcuts);
+    document.addEventListener("contextmenu", disableRightClick);
+
+    return () => {
+      document.removeEventListener("keydown", disableShortcuts);
+      document.removeEventListener("contextmenu", disableRightClick);
+    };
+  }, []);
+
+  // ✅ Detect tab switch (warning only)
+  useEffect(() => {
+    const handleBlur = () => {
+      setcheat(cheat+1)
+      alert("⚠️ You switched tabs! Stay on the quiz page.");
+      if(cheat===3){
+         handleSubmit();
+      }
+      // 🔒 Strict Mode: uncomment below line to auto-submit
+      // 
+    };
+
+    window.addEventListener("blur", handleBlur);
+    return () => window.removeEventListener("blur", handleBlur);
+  }, []);
 
   
   const totalQuestions = 50;
@@ -286,8 +379,8 @@ const handleSubmit = async () => {
     <div className="quiz-container">
       <div className="main-content">
         <div className="header3">
-          <h2>Unstop-style Quiz</h2>
-          <div className="timer">Time Left: 35:26</div>
+          <h2>Turing Test Quiz</h2>
+          <div className="timer">Time Left: {formatTime(timeLeft)}</div>
         </div>
 
         <div className="progress-bar">
@@ -300,7 +393,7 @@ const handleSubmit = async () => {
         </div>
 
         <h3 className="questions">
-          Question {currentQuestion + 1} of {totalQuestions}
+          Question {currentQuestion + 1} of {totalQuestions} / {questions[currentQuestion].domain}
         </h3>
         <p className="question-text">{currentQ.question}</p>
 
