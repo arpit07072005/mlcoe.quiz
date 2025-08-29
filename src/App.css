@@ -318,7 +318,7 @@ body.dark svg{
 }
 .submit-btn2{
   background-color: #5cb85c;
-  font-size: 30px;
+  font-size: 24px;
 
 }
 
@@ -365,6 +365,20 @@ canvas{
   height:400px;
   width:400px;
 }
+.thankyou{
+  width:100%;
+  height:100%;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.thankyou span{
+ width:300px;
+ color: #9CA3AF
+}
+
 
 
 

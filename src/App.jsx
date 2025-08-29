@@ -16,6 +16,7 @@ import Quizinstruction from './components/Quizinstruction'
 import MainQuiz from './components/MainQuiz'
 import { useState } from 'react'
 import PreResult from './components/PreResult'
+import Thankyou from './components/Thankyou'
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
              <Route path ="/quizinstruction" element={<Quizinstruction/>} />
              <Route path ="/mainquiz" element={<MainQuiz handlesend={handlesend}/>} />
              <Route path ="/preresult" element={<PreResult answeredQuestions={answeredQuestions} notAnswered={notAnswered} markedForReview={markedForReview} visitedQuestions={visitedQuestions}/>} />
+             <Route path ="/thankyou" element={<Thankyou/>} />
           </Routes>
           <ToastContainer position="top-right" autoClose={3000} />
         </Router>

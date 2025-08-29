@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Doughnut, Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { useNavigate } from 'react-router';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function PreResult({answeredQuestions,markedForReview,notAnswered,visitedQuestions}) {
     const [chartData, setChartData] = useState(null);
+    const navigate = useNavigate();
     const totalQuestions=50;
     useEffect(()=>{
         setChartData({
@@ -59,7 +61,7 @@ function PreResult({answeredQuestions,markedForReview,notAnswered,visitedQuestio
             </div>
           </div>
         </div>
-        <button className='submit-btn2'>Submit</button>
+        <button className='submit-btn2' onClick={()=>{navigate("/thankyou")}}>Submit</button>
       
     </div>
   )
