@@ -463,7 +463,7 @@ const handleSubmit = async () => {
         </div>
 
         {/* results after submit */}
-        {submitted && (
+        {/* {submitted && (
           <div className="results" style={{ marginTop: 12 }}>
             <h3>Quiz Results</h3>
             <p>
@@ -482,7 +482,7 @@ const handleSubmit = async () => {
               )}
             </ul> 
           </div>
-        )}
+        )} */}
       </div>
 
       <div className="sidebar">
