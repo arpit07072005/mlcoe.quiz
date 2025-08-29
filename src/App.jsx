@@ -6,7 +6,8 @@ import Users from './components/Users'
 import Addusers from './components/Addusers'
 import Questions from './components/Questions'
 import Addquestions from './components/Addquestions'
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Login from './components/Login'
 import Quiz from './components/Quiz'
 import NewQuiz from './components/NewQuiz'
@@ -54,6 +55,7 @@ function App() {
              <Route path ="/mainquiz" element={<MainQuiz handlesend={handlesend}/>} />
              <Route path ="/preresult" element={<PreResult answeredQuestions={answeredQuestions} notAnswered={notAnswered} markedForReview={markedForReview} visitedQuestions={visitedQuestions}/>} />
           </Routes>
+          <ToastContainer position="top-right" autoClose={3000} />
         </Router>
       </div>
      

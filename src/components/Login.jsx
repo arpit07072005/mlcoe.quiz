@@ -8,11 +8,13 @@ function Login() {
   const [fullname, setFullname] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState(1); // 1 = login, 2 = otp
-  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false); // for button disabling
+  const navigate = useNavigate();
 
   // Handle Login (step 1)
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true); // disable button
     try {
       const response = await axios.post(
         "https://final-quiz-portal.onrender.com/api/login/register",
@@ -24,18 +26,21 @@ function Login() {
       );
 
       console.log("Login Response:", response.data);
-       localStorage.setItem("userEmail", email);
+      localStorage.setItem("userEmail", email);
       localStorage.setItem("userName", fullname);
+
       setStep(2); // move to OTP step
-     
+      setLoading(false); // re-enable when OTP page loads
     } catch (error) {
       console.error("Login Error:", error);
+      setLoading(false); // re-enable in case of error
     }
   };
 
   // Handle OTP Verification (step 2)
   const handleOtp = async (e) => {
     e.preventDefault();
+    setLoading(true); // disable button during verification
     try {
       const response = await axios.post(
         "https://final-quiz-portal.onrender.com/api/login/verify",
@@ -46,10 +51,10 @@ function Login() {
       );
 
       console.log("OTP Verification Response:", response.data);
-      // ✅ Now user is authenticated, you can redirect or store token
-      navigate("/quizlanding")
+      navigate("/quizlanding");
     } catch (error) {
       console.error("OTP Verification Error:", error);
+      setLoading(false); // re-enable on error
     }
   };
 
@@ -93,8 +98,12 @@ function Login() {
               <span className={styles.link}>Forgot Password?</span>
             </div>
 
-            <button type="submit" className={styles.login1}>
-              Send OTP
+            <button
+              type="submit"
+              className={styles.login1}
+              disabled={loading} // disable when loading
+            >
+              {loading ? "Sending OTP..." : "Send OTP"}
             </button>
           </form>
         )}
@@ -112,8 +121,12 @@ function Login() {
                 required
               />
             </div>
-            <button type="submit" className={styles.login1}>
-              Verify OTP
+            <button
+              type="submit"
+              className={styles.login1}
+              disabled={loading} // disable when loading
+            >
+              {loading ? "Verifying..." : "Verify OTP"}
             </button>
           </form>
         )}

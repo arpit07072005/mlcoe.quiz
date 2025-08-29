@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 
 
@@ -40,20 +41,20 @@ const MainQuiz = ({handlesend}) => {
     }
   };
 
-  useEffect(() => {
-    const handleExit = () => {
-      if (!document.fullscreenElement) {
-        alert("⚠️ You exited fullscreen. Please return to the test!");
-        setTimeout(() => {
-          if (!document.fullscreenElement) {
-            enterFullScreen();
-          }
-        }, 500);
-      }
-    };
-    document.addEventListener("fullscreenchange", handleExit);
-    return () => document.removeEventListener("fullscreenchange", handleExit);
-  }, []);
+  // useEffect(() => {
+  //   const handleExit = () => {
+  //     if (!document.fullscreenElement) {
+  //       toast.warn("⚠️ You exited fullscreen. Please return to the test!");
+  //       setTimeout(() => {
+  //         if (!document.fullscreenElement) {
+  //           enterFullScreen();
+  //         }
+  //       }, 500);
+  //     }
+  //   };
+  //   document.addEventListener("fullscreenchange", handleExit);
+  //   return () => document.removeEventListener("fullscreenchange", handleExit);
+  // }, []);
 
 
  useEffect(() => {
@@ -80,7 +81,7 @@ const MainQuiz = ({handlesend}) => {
   useEffect(() => {
     const handleExit = () => {
       if (!document.fullscreenElement) {
-        alert("⚠️ You exited fullscreen. Returning you back to the test!");
+        toast.warn("⚠️ You exited fullscreen. Returning you back to the test!");
         enterFullScreen();
       }
     };
@@ -96,7 +97,7 @@ const MainQuiz = ({handlesend}) => {
         e.key === "F12"
       ) {
         e.preventDefault();
-        alert("🚫 Shortcuts are disabled during the test!");
+        toast.warn("🚫 Shortcuts are disabled during the test!");
       }
     };
 
@@ -122,10 +123,10 @@ const MainQuiz = ({handlesend}) => {
       setCheat((prev) => {
         const newCount = prev + 1;
         if (newCount >= 3) {
-          alert("🚨 You switched tabs 3 times. Submitting quiz.");
+          toast.warn("🚨 You switched tabs 3 times. Submitting quiz.");
           handleSubmit();
         } else {
-          alert(`⚠️ Tab switch detected! (${newCount}/3 warnings)`);
+          toast.warn(`⚠️ Tab switch detected! (${newCount}/3 warnings)`);
         }
         return newCount;
       });
@@ -181,7 +182,6 @@ const MainQuiz = ({handlesend}) => {
     const fetchData = async () => {
   try {
     const response = await axios.get("https://final-quiz-portal.onrender.com/api/mcqs/getques");
-    console.log("Fetched questions:", response.data);
     const qs = response.data || [];
     setQuestions(qs);
     setResponses(new Array(qs.length).fill(null));
@@ -382,7 +382,7 @@ const handleSubmit = async () => {
 
     // ✅ Clear quiz state from localStorage
     localStorage.removeItem(STORAGE_KEY);
-
+    toast.success("Quiz submitted successfully")
     // ✅ Navigate
     navigate("/preresult");
   } catch (err) {
