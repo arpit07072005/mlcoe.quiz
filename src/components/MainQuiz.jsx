@@ -140,7 +140,7 @@ const MainQuiz = ({handlesend}) => {
   }, []);
 
   
-  const totalQuestions = 50;
+  const totalQuestions = 40;
   const getOptionEntries = (q) => {
     if (!q) return [];
     const opts = q.options;
