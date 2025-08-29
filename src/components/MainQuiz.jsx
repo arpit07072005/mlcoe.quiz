@@ -451,9 +451,15 @@ const handleSubmit = async () => {
           <button className="mark-review-btn" onClick={handleMarkForReview}>
             Mark for Review & Next
           </button>
-          <button className="submit-btn1" onClick={handleSubmit}>
-            Submit Quiz
-          </button>
+          <button
+  className="submit-btn1"
+  onClick={handleSubmit}
+  disabled={answeredQuestions.size !== totalQuestions && timeLeft > 0}
+>
+  {answeredQuestions.size !== totalQuestions && timeLeft > 0
+    ? "Answer All Questions to Submit"
+    : "Submit Quiz"}
+</button>
         </div>
 
         {/* results after submit */}
