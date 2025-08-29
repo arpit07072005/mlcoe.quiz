@@ -8,7 +8,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 function PreResult({answeredQuestions,markedForReview,notAnswered,visitedQuestions}) {
     const [chartData, setChartData] = useState(null);
     const navigate = useNavigate();
-    const totalQuestions=50;
+    const totalQuestions=40;
     useEffect(()=>{
         setChartData({
     labels: ["Answered", "Not Answered", "Marked", "Not Visited"],
