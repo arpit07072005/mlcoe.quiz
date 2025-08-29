@@ -9,11 +9,22 @@ function Login() {
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState(1); // 1 = login, 2 = otp
   const [loading, setLoading] = useState(false); // for button disabling
+  const [emailError, setEmailError] = useState(""); // validation error
   const navigate = useNavigate();
+
+  // Regex: must end with @akgec.ac.in
+  const akgecEmailRegex = /^[a-zA-Z0-9._%+-]+@akgec\.ac\.in$/;
 
   // Handle Login (step 1)
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    if (!akgecEmailRegex.test(email)) {
+      setEmailError("Email must end with @akgec.ac.in");
+      return;
+    }
+    setEmailError("");
+
     setLoading(true); // disable button
     try {
       const response = await axios.post(
@@ -76,6 +87,11 @@ function Login() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
+              {emailError && (
+                <span style={{ color: "red", fontSize: "12px" }}>
+                  {emailError}
+                </span>
+              )}
             </div>
 
             <div className={styles.email}>
