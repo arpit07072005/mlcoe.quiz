@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 const STORAGE_KEY = "quizState_preserve_classnames_v1";
 
 const MainQuiz = ({handlesend}) => {
-  const[cheat,setcheat]=useState(0)
+  const[cheat,setCheat]=useState(0)
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [responses, setResponses] = useState([]); 
@@ -27,20 +27,32 @@ const MainQuiz = ({handlesend}) => {
 
 
  const enterFullScreen = () => {
-  const elem = document.documentElement;
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.mozRequestFullScreen) { // Firefox
-    elem.mozRequestFullScreen();
-  } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, Opera
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { // IE/Edge
-    elem.msRequestFullscreen();
-  }
-};
+  console.log(cheat)
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    }
+  };
 
   useEffect(() => {
-    enterFullScreen();
+    const handleExit = () => {
+      if (!document.fullscreenElement) {
+        alert("⚠️ You exited fullscreen. Please return to the test!");
+        setTimeout(() => {
+          if (!document.fullscreenElement) {
+            enterFullScreen();
+          }
+        }, 500);
+      }
+    };
+    document.addEventListener("fullscreenchange", handleExit);
+    return () => document.removeEventListener("fullscreenchange", handleExit);
   }, []);
 
 
@@ -101,14 +113,26 @@ const MainQuiz = ({handlesend}) => {
 
   // ✅ Detect tab switch (warning only)
   useEffect(() => {
+    let warningShown = false;
+
     const handleBlur = () => {
-      setcheat(cheat+1)
-      alert("⚠️ You switched tabs! Stay on the quiz page.");
-      if(cheat===3){
-         handleSubmit();
-      }
-      // 🔒 Strict Mode: uncomment below line to auto-submit
-      // 
+      if (warningShown) return; // prevent spam
+      warningShown = true;
+
+      setCheat((prev) => {
+        const newCount = prev + 1;
+        if (newCount >= 3) {
+          alert("🚨 You switched tabs 3 times. Submitting quiz.");
+          handleSubmit();
+        } else {
+          alert(`⚠️ Tab switch detected! (${newCount}/3 warnings)`);
+        }
+        return newCount;
+      });
+
+      setTimeout(() => {
+        warningShown = false;
+      }, 2000);
     };
 
     window.addEventListener("blur", handleBlur);
